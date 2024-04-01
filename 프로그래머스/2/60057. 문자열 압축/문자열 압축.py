@@ -13,8 +13,10 @@ def solution(s):
             else:
                 string+=s[a:a+unit]
         str_lst.append(string)
-    val=len(str_lst[0])
-    for i in range(1,len(str_lst)):
-        val=min(val,len(str_lst[i]))
-    answer=val
+
+    answer=min(len(ss) for ss in str_lst)
+    # val=len(str_lst[0])
+    # for i in range(1,len(str_lst)):
+    #     val=min(val,len(str_lst[i]))
+    # answer=val
     return answer
