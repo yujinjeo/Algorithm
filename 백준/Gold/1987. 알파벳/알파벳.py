@@ -1,5 +1,8 @@
 import sys
 
+#####메모리 초과 : setrecursionlimit, visited, deque.append, list.remove #####
+#####시간 초과 : for dx,dy in d , deque.append, set.add #####
+
 r, c = list(map(int, sys.stdin.readline().split()))
 graph = [[0 for x in range(c)] for x in range(r)]
 for i in range(r):
