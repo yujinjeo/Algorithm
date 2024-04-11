@@ -39,8 +39,8 @@ def mon(can):
         return 
   return 'YES'
 
-def bact(lst):
-  if len(lst)==3:
+def bact(lst,cnt):
+  if cnt==3:
     can=deepcopy(board)
     for i in range(3):
       x,y=lst[i]
@@ -55,11 +55,11 @@ def bact(lst):
     for j in range(n):
       if board[i][j]=='X' and (i,j) not in lst:
         lst.append((i,j))
-        bact(lst)
+        bact(lst,cnt+1)
         lst.remove((i,j))
 
 
 answer='NO'        
 lst=[]
-bact(lst)
+bact(lst,0)
 print(answer)
