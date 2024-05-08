@@ -7,7 +7,7 @@ lst=list(map(int,input().split()))
 l=[0 for _ in range(m+1)]
 
 
-for i in range(1,n):
+for i in range(n):
   l[lst[i]]+=1
 
 answer=0
