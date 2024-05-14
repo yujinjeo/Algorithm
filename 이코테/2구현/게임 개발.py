@@ -7,18 +7,18 @@ x,y,d=map(int,input().split())
 
 board=[list(map(int,input().split())) for _ in range(n)]
 
-move={0:(1,0), 1:(0,1), 2:(-1,0), 3:(0,-1)}
+move={0:(-1,0), 1:(0,1), 2:(1,0), 3:(0,-1)}
 board[x][y]=2
 answer=1
 
-def turn_left(d):
+def turn_left():
+  global d
   d=(d-1)%4
-  return d
 
 while True:
   flag=0
   for i in range(4):
-    d=turn_left(d)
+    turn_left()
     dx,dy=move[d]
     a=dx+x
     b=dy+y
@@ -40,10 +40,6 @@ while True:
       continue
     else:
       break
+
 print(answer)
       
-        
-
-      
-      
-
