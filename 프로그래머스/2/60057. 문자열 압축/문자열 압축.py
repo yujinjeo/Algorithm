@@ -1,22 +1,25 @@
-def solution(s):
-    answer = 0
-    str_lst=[]
-    for unit in range(1, len(s)+1):
-        cnt=1
-        string=""
-        for a in range(0, len(s), unit):
-            if s[a:a+unit]==s[a+unit:a+2*unit]:
-                cnt+=1
-            elif cnt>1:
-                string+=str(cnt)+s[a:a+unit]
-                cnt=1
-            else:
-                string+=s[a:a+unit]
-        str_lst.append(string)
+def count_s(s,n):
+    string = ''
+    word=s[:n]
+    cnt=1
+    for i in range(n,len(s),n):
+        if s[i:i+n]==word:
+            cnt+=1
+        else:
+            if cnt>1:
+                string+=str(cnt)
+            string+=word
+            word=s[i:i+n]
+            cnt=1
+    if cnt>1:
+        string+=str(cnt)
+    string+=word
+    return len(string)        
 
-    answer=min(len(ss) for ss in str_lst)
-    # val=len(str_lst[0])
-    # for i in range(1,len(str_lst)):
-    #     val=min(val,len(str_lst[i]))
-    # answer=val
+def solution(s):
+    answer = len(s)
+    for i in range(1,len(s)+1):
+        c=count_s(s,i)
+        answer=min(answer,c)
+    
     return answer
