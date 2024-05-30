@@ -1,75 +1,43 @@
 import sys
-
 input=sys.stdin.readline
+
 n=int(input())
-lst=list(map(int, input().split()))
-pmmd=list(map(int, input().split()))
+nums=list(map(int,input().split()))
+# 0 : + , 1 : - , 2 : x , 3 : %
+cal=list(map(int,input().split()))
 
-ans=[]
-
-def bact(picked,cnt,a):
-  if cnt==n:
-    if a not in ans:
-      ans.append(a)
+maxval,minval=-10**9,10**9
+def dfs(order):
+  if cal.count(0)==4:
+    count(order)
     return
   for i in range(4):
-    if pd[i]>0:
-      pd[i]-=1
-      picked.append(i)
-      tmp=a
-      if i==0:
-        a+=lst[cnt]
-      elif i==1:
-        a-=lst[cnt]
-      elif i==2:
-        a*=lst[cnt]
-      elif i==3:
-        if a<0:
-          rr=-a
-          rr//=lst[cnt]
-          a=-rr
-        else:
-          a//=lst[cnt]
-      bact(picked,cnt+1,a)
-      a=tmp
-      pd[i]+=1
-      picked.pop()
+    if cal[i]!=0:
+      order.append(i)
+      cal[i]-=1
+      dfs(order)
+      order.pop()
+      cal[i]+=1
 
-  # if pd[0]>0:
-  #   print("+")
-  #   pd[0]-=1
-  #   a=a+lst[cnt]
-  #   bact(cnt+1,a)
-  #   pd[0]+=1
-  #   a-=lst[cnt]
-  # if pd[1]>0:
-  #   print("-")
-  #   pd[1]-=1
-  #   a=a-lst[cnt]
-  #   bact(cnt+1,a)
-  #   pd[1]+=1
-  #   a+=lst[cnt]
-  # if pd[2]>0:
-  #   print("*")
-  #   pd[2]-=1
-  #   tmp=a
-  #   a*=lst[cnt]
-  #   bact(cnt+1,a)
-  #   pd[2]+=1
-  #   a=tmp
-  # if pd[3]>0:
-  #   print("/")
-  #   pd[3]-=1
-  #   tmp=a
-  #   a//=lst[cnt]
-  #   bact(cnt+1,a)
-  #   pd[3]+=1
-  #   a=tmp
-  
-pd=pmmd.copy()
-picked=[]
-bact(picked,1,lst[0])
+def count(order):
+  global maxval, minval
+  cand=nums[0]
+  for i in range(1,n):
+    c=order[i-1]
+    if c==0:
+      cand+=nums[i]
+    elif c==1:
+      cand-=nums[i]
+    elif c==2:
+      cand*=nums[i]
+    else:
+      if cand<0:
+        cand=-(abs(cand)//nums[i])
+      else:
+        cand=cand//nums[i]
+  maxval=max(maxval,cand)
+  minval=min(minval,cand)
 
-ans=sorted(ans)
-print(ans[-1])
-print(ans[0])
+dfs([])
+print(maxval)
+print(minval)
