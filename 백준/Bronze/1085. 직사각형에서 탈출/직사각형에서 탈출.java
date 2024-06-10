@@ -1,19 +1,22 @@
 import java.util.*;
+import java.io.*;
 
-public class Main{
-    
-    public static void main(String args[]) {
+public class Main {
+    public static void main(String args[]) throws IOException {
         
-        Scanner sc = new Scanner(System.in);
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         
-        int x=sc.nextInt();
-        int y=sc.nextInt();
-        int w=sc.nextInt();
-        int h=sc.nextInt();
+        String[] lst = br.readLine().split(" ");
         
-        int answer= Math.min(x,Math.min(y,Math.min((w-x),(h-y))));
+        int x=Integer.parseInt(lst[0]);
+        int y=Integer.parseInt(lst[1]);
+        int w=Integer.parseInt(lst[2]);
+        int h=Integer.parseInt(lst[3]);
+        
+        int answer=Integer.MAX_VALUE;
+        
+        answer = Math.min(Math.min(x,w-x), Math.min(y,h-y));
         System.out.println(answer);
-        
         
     }
 }
