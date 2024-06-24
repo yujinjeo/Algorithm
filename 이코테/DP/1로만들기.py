@@ -13,7 +13,7 @@ for i in range(6, n+1):
   if i%2==0:
     val=min(val, lst[i//2])
   if i%5==0:
-    val=min(val, lst[i//5])
+    val=min(val, lst[i//3])
   lst.append(val+1)
 
 print(lst[n])
