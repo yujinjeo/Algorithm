@@ -16,6 +16,7 @@ cnt=1
 while True:
   back=True
   for _ in range(4):
+    d=(d+1)%4
     dx,dy=direction[d]
     if 0<=dx+x<n and 0<=dy+y<m and board[dx+x][dy+y]==0:
       x+=dx
@@ -24,8 +25,6 @@ while True:
       cnt+=1
       back=False
       break
-    else:
-      d=(d+1)%4
   if back:
     dx,dy=direction[d]
     if 0<=x-dx<n and 0<=y-dy<m and board[x-dx][y-dy]!=1:
@@ -34,7 +33,6 @@ while True:
     else:
       break
 
-print(board)
 print(cnt)      
     
 
