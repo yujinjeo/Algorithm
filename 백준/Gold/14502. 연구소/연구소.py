@@ -1,115 +1,57 @@
-# import sys
-# from collections import deque
-# from copy import deepcopy
-
-# input = sys.stdin.readline
-# n, m = map(int, input().split())
-
-# board = [list(map(int, input().split())) for _ in range(n)]
-# virus = []
-# for i in range(n):
-#   for j in range(m):
-#     if board[i][j] == 2:
-#       virus.append((i, j))
-
-# answer = 0
-# # 벽 세우기
-# def make_wall(cnt):
-#   if cnt == 3:
-#     spread()
-#     return
-#   for i in range(n):
-#     for j in range(m):
-#       if board[i][j] == 0:
-#         board[i][j] = 1
-#         make_wall(cnt + 1)
-#         board[i][j] = 0
-
-
-# d = [(0, 1), (1, 0), (-1, 0), (0, -1)]
-
-
-# # 퍼뜨리기
-# def spread():
-#   global answer
-#   cand = deepcopy(board)
-#   q = deque(virus)
-#   while q:
-#     i, j = q.popleft()
-#     for k in range(4):
-#       dx, dy = d[k]
-#       x = i + dx
-#       y = j + dy
-#       if 0 <= x < n and 0 <= y < m and cand[x][y] == 0:
-#         cand[x][y] = 2
-#         q.append((x, y))
-#   safe=0
-#   for i in range(n):
-#     safe += cand[i].count(0)
-#   answer = max(answer, safe)
-
-
-# # 3개 고르기
-# make_wall(0)
-# print(answer)
-
-
 import sys
-from collections import deque
 from copy import deepcopy
+from collections import deque
 
 input=sys.stdin.readline
 n,m=map(int,input().split())
 
-board=[list(map(int,input().split())) for _ in range(n)]
 virus=[]
+board=[]
+
 for i in range(n):
-  for j in range(m):
-    if board[i][j]==2:
+  lst=list(map(int, input().split(' ')))
+  board.append(lst)
+  for j in range(len(lst)):
+    if lst[j]==2:
       virus.append((i,j))
 
-answer=0
-# 벽 세우기
-def make_wall(cand,cnt):
-  global answer
-  if cnt==3:
-    spread(cand)
-    return
-  for i in range(n):
-    for j in range(m):
-      if cand[i][j]==0:
-        cand[i][j]=1
-        make_wall(cand,cnt+1)
-        cand[i][j]=0
-
-
 d=[(0,1),(1,0),(-1,0),(0,-1)]
-# 퍼뜨리기
-def spread(can):
-  global answer
-  cand=deepcopy(can)
+
+def spread(lab):
   q=deque(virus)
   while q:
-    i,j=q.popleft()
-    for k in range(4):
-      dx,dy=d[k]
-      x=i+dx
-      y=j+dy
-      if 0<=x<n and 0<=y<m and cand[x][y]==0:
-        cand[x][y]=2
-        q.append((x,y))
-  safe=0
+    x,y=q.popleft()
+    for dx,dy in d:
+      a=x+dx
+      b=y+dy
+      if 0<=a<n and 0<=b<m and lab[a][b]==0:
+        lab[a][b]=2
+        q.append((a,b))
+  k=0
   for i in range(n):
-    safe+=cand[i].count(0)
-  answer=max(answer,safe)
+    for j in range(m):
+      if lab[i][j]==0:
+        k+=1
+  
+  return k
 
+answer=0
+def bact(x,y,lst,cnt):
+  global answer
+  if cnt==3:
+    lab=deepcopy(board)
+    for i,j in lst:
+      lab[i][j]=1
+    answer=max(answer,spread(lab))
+    return
+  for i in range(x,n):
+    start_j=y if x==i else 0
+    for j in range(start_j,m):
+      if board[i][j]==0:
+        lst.append((i,j))
+        bact(i,j+1,lst,cnt+1)
+        lst.remove((i,j))
 
-# 3개 고르기
-for i in range(n):
-  for j in range(m):
-    if board[i][j]==0:
-      cand_b=deepcopy(board)
-      cand_b[i][j]=1
-      make_wall(cand_b,1)
-
+bact(0,0,[],0)
 print(answer)
+
