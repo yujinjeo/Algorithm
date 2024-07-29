@@ -7,6 +7,8 @@ num=list(map(int,input().split(' ')))
 opr=list(map(int,input().split(' ')))
 # 0 1 2 3
 # + - x /
+
+# maxval,minval=-1e9,1e9 ** 10억 미만인 경우만 가능한 숫자이다. 이 문제의 경우, 10억, -10억 까지를 포함하므로, -10**9 , 10**9 로 수를 써야 한다!
 maxval,minval=-10**9,10**9
 
 def calculate(lst):
