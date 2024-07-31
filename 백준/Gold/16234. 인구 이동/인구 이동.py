@@ -1,52 +1,49 @@
 import sys
 from collections import deque
 
-input=sys.stdin.readline
-
-n,l,r=map(int, input().split())
+input = sys.stdin.readline
+n,r,c=map(int,input().split(' '))
 board=[list(map(int, input().split())) for _ in range(n)]
+d=[(0,1),(1,0),(-1,0),(0,-1)]
 
-#board 전체에서 옆 칸과의 차이가 얼마나 나는지 확인해야 한다.  bfs로 구역을 찾아야 한다. visited..? 는 있어야 
-d=[[0,1],[0,-1],[1,0],[-1,0]]
-
-def bfs(i,j):
+def bfs(o,k,cand):
+  lst=[(o,k)]
   q=deque()
-  q.append((i,j))
-  land=[(i,j)]
+  q.append((o,k))
   while q:
     x,y=q.popleft()
-    for i in range(4):
-      a=x+d[i][0]
-      b=y+d[i][1]
+    for dx, dy in d:
+      a=x+dx
+      b=y+dy
       if 0<=a<n and 0<=b<n and visited[a][b]==False:
-        if l<=abs(board[a][b]-board[x][y])<=r:
-          visited[a][b]=True
-          land.append((a,b))
+        if r<=abs(cand[x][y]-cand[a][b])<=c:
           q.append((a,b))
-  return land
-
+          lst.append((a,b))
+          visited[a][b]=True
+  if len(lst)==1:
+    return False
+  sum=0 
+  for x,y in lst:
+    sum+=cand[x][y]
+  val=sum//len(lst)
+  for x,y in lst:
+    cand[x][y]=val
+  return True
 
 answer=0
 while True:
+  is_change=False
   visited=[[False for _ in range(n)] for _ in range(n)]
-  today=[]
-  
   for i in range(n):
     for j in range(n):
       if visited[i][j]==False:
         visited[i][j]=True
-        land=bfs(i,j)
-        if len(land)>=2:
-          today.append(land)
-  if today==[]:
+        val= bfs(i,j,board)
+        if val==True:
+          is_change=True
+  if is_change:
+    answer+=1
+  else:
     break
-          
-  #today 각 랜드들 값을 넣기
-  for land in today:
-    lsum=sum(board[x][y] for x,y in land)
-    val=lsum//len(land)
-    for i,j in land:
-      board[i][j]=val
-  answer+=1
 
 print(answer)
