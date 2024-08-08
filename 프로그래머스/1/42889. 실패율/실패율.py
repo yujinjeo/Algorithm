@@ -1,39 +1,21 @@
-idx=0
-
-def failrate(stages, k):
-    global idx
-    n=len(stages)
-    total=n-idx
-    r=idx
-    for i in range(r,n):
-        if stages[i]>k:
-            break
-        idx+=1
-    cnt=idx-r
-    if cnt==0:
-        answer=0
-    else:
-        answer=cnt/total
-    
-    print(answer)
-    
-    return answer
-
-
-
 def solution(N, stages):
-    global idx
-    answer=[]
+    answer = []
+    fail_rate=[]
     stages.sort()
+    m=len(stages)
     
-    fails={}
-    idx=0
-    # 각 스테이지별 실패율
     for i in range(1,N+1):
-        fails[i]=failrate(stages,i)
         
-    lst=sorted(fails.items(), key= lambda item:item[1], reverse=True)
-    for item in lst:
-        answer.append(item[0])
+        cnt=stages.count(i)
+        
+        if cnt>0:
+            idx=stages.index(i)
+            fail_rate.append((i,cnt/(m-idx)))
+        else:
+            fail_rate.append((i,0))
     
+    fail_rate.sort(key=lambda x:-x[1])
+    for i in range(N):
+        answer.append(fail_rate[i][0])
+        
     return answer
