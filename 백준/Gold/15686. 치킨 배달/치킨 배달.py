@@ -1,47 +1,58 @@
 import sys
+from itertools import combinations
+from collections import deque
 
 input = sys.stdin.readline
 
-n,m=map(int, input().split())
-board=[list(map(int, input().split()))for _ in range(n)]
-home=[]
+n,m=map(int,input().split(' '))
+board=[]
+
+house=[]
 chicken=[]
 for i in range(n):
+  lst=list(map(int,input().split(' ')))
   for j in range(n):
-    if board[i][j]==1:
-      home.append((i,j))
-    elif board[i][j]==2:
+    if lst[j]==1:
+      house.append((i,j))
+    if lst[j]==2:
       chicken.append((i,j))
-
-
-visited=[False]*(len(chicken))
-answers=[]
-
-def findMinVal():
-  answer=0
-  for i in range(len(home)):
-    x,y=home[i]
-    cand=1e9
-    for j in range(len(visited)):
-      if visited[j]==True:
-        dist=abs(chicken[j][0]-x)+abs(chicken[j][1]-y)
-        cand=min(cand,dist)
-    answer+=cand
-  answers.append(answer)
-      
-    
+  board.append(lst)
   
 
-# 백트래킹으로 치킨집 조합 m 개를 구한다.
-def back(idx,cnt):
-  if cnt==m:
-    findMinVal()
-    return
-  for i in range(idx,len(chicken)): 
-    visited[i]=True
-    back(i+1,cnt+1)
-    visited[i]=False
-    
-back(0,0) 
+d=[(0,1),(0,-1),(1,0),(-1,0)]
+answer=1e9
 
-print(min(answers))
+def find(i,j,chicks):
+  dist=1e9
+  for a,b in chicks:
+    d=abs(i-a)+abs(j-b)
+    dist=min(d,dist)
+  return dist
+  
+  # visited=[[False for _ in range(n)] for _ in range(n)]
+  # visited[i][j]=True
+  # q=deque([(i,j,0)])
+  # while q:
+  #   x,y,cnt=q.popleft()
+  #   if (x,y) in chicks:
+  #     return cnt
+    
+  #   for k in range(4):
+  #     a=x+d[k][0]
+  #     b=y+d[k][1]
+  #     if 0<=a<n and 0<=b<n:
+  #       if visited[a][b]==False:
+  #         q.append((a,b,cnt+1))
+  #         visited[a][b]=True
+
+c_lst=list(combinations(chicken, m))
+
+for chicks in c_lst:
+  cand=0
+  for i in range(len(house)):
+    cand+=find(house[i][0],house[i][1], chicks)
+  answer=min(answer,cand)
+          
+print(answer)
+  
+
