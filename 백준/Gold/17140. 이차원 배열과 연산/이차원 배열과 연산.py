@@ -22,42 +22,42 @@ def cal(board, type):
   
   for i in range(h):
     lst=board[i]
-    # lst.sort()
+    lst.sort()
     newlst=[]
 
-    dic=dict()
-    for j in range(len(lst)):
-      if lst[j]!=0:
-        if lst[j] not in dic:
-          dic[lst[j]]=1
-        else:
-          dic[lst[j]]+=1
-    for key,value in dic.items():
-      newlst.append([key,value])
+    # dic=dict()
+    # for j in range(len(lst)):
+    #   if lst[j]!=0:
+    #     if lst[j] not in dic:
+    #       dic[lst[j]]=1
+    #     else:
+    #       dic[lst[j]]+=1
+    # for key,value in dic.items():
+    #   newlst.append([key,value])
 
-    # value=0
-    # for i in range(len(lst)):
-    #   if lst[i]!=0:
-    #     value=lst[i]
-    #     break
-    # cnt=0
+    value=0
+    for i in range(len(lst)):
+      if lst[i]!=0:
+        value=lst[i]
+        break
+    cnt=0
 
     
-    # for j in range(0, len(board[i])):
-    #   if value==lst[j] and lst[j]>0:
-    #     cnt+=1
-    #   elif lst[j]>0:
-    #     newlst.append((value, cnt))
-    #     value=lst[j]
-    #     cnt=1
-    # if cnt!=0:
-    #   newlst.append((value,cnt))
-    # else:
-    #   newlst.append((value,1))
+    for j in range(0, len(board[i])):
+      if value==lst[j] and lst[j]>0:
+        cnt+=1
+      elif lst[j]>0:
+        newlst.append((value, cnt))
+        value=lst[j]
+        cnt=1
+    if cnt!=0:
+      newlst.append((value,cnt))
+    else:
+      newlst.append((value,1))
       
-    newlst.sort(key=lambda x:[x[1],x[0]])
-    # newlst=[item for tup in newlst for item in tup]
-    newlst=sum(newlst,[])
+    newlst.sort(key=lambda x:(x[1],x[0]))
+    newlst=[item for tup in newlst for item in tup]
+    # newlst=sum(newlst,[])
     w=max(w,len(newlst))
     newboard.append(newlst)
 
