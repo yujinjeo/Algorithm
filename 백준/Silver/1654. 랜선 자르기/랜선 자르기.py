@@ -1,5 +1,7 @@
 import sys
 
+input = sys.stdin.readline
+
 k,n=map(int,input().split(' '))
 lst=[0 for _ in range(k)]
 
@@ -29,7 +31,7 @@ def binary(s,e):
         ans=m
         binary(m+1,e)
 
-start =1
+start = 1
 end=max(lst)
 binary(start,end)
 print(ans)
