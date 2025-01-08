@@ -9,7 +9,6 @@ lst=list(map(int,input().split(' ')))
 
 
 cand=[]
-heapq.heapify(cand)
 current=0
 
 def is_in(x):
