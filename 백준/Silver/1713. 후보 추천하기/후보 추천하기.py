@@ -1,6 +1,7 @@
 import heapq
+import sys
 
-
+input = sys.stdin.readline
 n=int(input())
 t=int(input())
 
@@ -28,16 +29,7 @@ for i in range(t):
         else:
             heapq.heappop(cand)
             heapq.heappush(cand, [1,i,lst[i]])
-    # print(cand, for_x)
 
 cand.sort(key=lambda x : (x[2]))
 for i in range(current):
-    print(cand[i][2], end=' ')
-
-
-
-            
-        
-
-        
-        
+    print(cand[i][2], end=' ')  
