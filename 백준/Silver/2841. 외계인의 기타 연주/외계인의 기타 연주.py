@@ -6,7 +6,7 @@ n,p=map(int,input().split(' '))
 
 # board=[[False for _ in range(p+1)] for _ in range(n+1)]
 dic={}
-for i in range(1,n+1):
+for i in range(1,7):
     dic[i]=set()
     
 def minus(order, target):
