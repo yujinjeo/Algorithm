@@ -1,10 +1,10 @@
 import sys
 import heapq
 
+input= sys.stdin.readline
+
 n=int(input())
-board=[0 for _ in range(n+1)]
-for i in range(1,n+1):
-    board[i]=int(input())
+board=[0]+[int(input()) for _ in range(n)]
     
 visited=[False]*(n+1)
 h=[]
