@@ -3,10 +3,11 @@ import sys
 input = sys.stdin.readline
 
 d=[(-1,-1),(-1,0),(-1,1),(0,-1)]
-INF = float('inf')
+INF = 100000
 def func(n):
     lst=[list(map(int,input().split(' '))) for _ in range(n)]
     dp=[[INF,INF,INF] for _ in range(n)]
+
     dp[0][1]=lst[0][1]
     dp[0][2]=lst[0][1]+lst[0][2]
     
@@ -22,14 +23,12 @@ def func(n):
 
     return dp[n-1][1]
 
-ans=[0]
+t=1
 while True:
     n=int(input())
-    if n==0 : 
+    if not n : 
         break
-    ans.append(str(func(n)))
-
-for i in range(1,len(ans)):
-    print(str(i)+". "+ans[i])
-
-    
+    value= func(n)
+    answer=str(t)+". "+str(value)
+    print(answer)
+    t+=1
