@@ -5,11 +5,8 @@ s, n, k, r1, r2, c1, c2 = map(int,input().split())
 
 # 범위는 (r1, c1) ~ (r2, c2)
 board=[['0']*(c2-c1+1) for _ in range(r2-r1+1)]
-# board=[['0']*(n**s) for _ in range(n**s)]
 
-def bact(x,y, r, t):
-    # print(x,y,r,t)
-    
+def func(x,y, r, t):
     global board
         
     radius = (r//n)*k
@@ -37,12 +34,12 @@ def bact(x,y, r, t):
                 continue
             if a>r2 or a+new_r<r1 or b>c2 or b+new_r<c1:
                 continue
-            bact(a,b, new_r, t-1)
+            func(a,b, new_r, t-1)
 
 if s==0:
     print('0')
 else:
-    bact(0,0,n**s,s)
+    func(0,0,n**s,s)
     for i in range(len(board)):
         print(''.join(board[i]))
     
