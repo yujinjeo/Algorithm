@@ -1,35 +1,31 @@
 import sys
 
-input =sys.stdin.readline
+input = sys.stdin.readline
 
 n=int(input())
 stack=[0]
 ans=[]
-maxv=0
+cnt=1
 
-for i in range(n):
-    target=int(input())
-    top=stack[-1]
-
-    if top==target:
-        ans.append('-')
-        stack.pop()
-        continue
-    
-    if target<top:
-        cand=stack.pop()
-        if cand!=target:
+for _ in range(n):
+    target = int(input())
+    while target>stack[-1]:
+        stack.append(cnt)
+        cnt+=1
+        ans.append(True)
+    else:
+        if target==stack[-1]:
+            stack.pop()
+            ans.append(False)
+        else:
             print('NO')
             sys.exit()
-        ans.append('-')
-        
-    else:
-        for j in range(maxv+1,target):
-            stack.append(j)
-            ans.append("+")
-        maxv=max(maxv,target)
-        ans.append("+")
-        ans.append('-')
-        
+    # print(*stack)
+    # print(*ans)
+
 for a in ans:
-    print(a)
+    if a: print('+')
+    else: print('-')
+            
+            
+        
